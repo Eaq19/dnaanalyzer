@@ -1,7 +1,7 @@
 package com.meli.dnaanalyzer.controller.impl;
 
 import com.meli.dnaanalyzer.controller.MutantController;
-import com.meli.dnaanalyzer.model.Person;
+import com.meli.dnaanalyzer.model.request.Person;
 import com.meli.dnaanalyzer.service.MutantServiceInt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package com.meli.dnaanalyzer.model;
+package com.meli.dnaanalyzer.model.request;
 
 import lombok.*;
 
@@ -9,6 +9,5 @@ import lombok.*;
 @Builder
 public class Person {
 
-    private String name;
     private String[] dna;
 }
