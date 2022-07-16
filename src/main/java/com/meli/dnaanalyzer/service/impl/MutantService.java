@@ -43,10 +43,10 @@ public class MutantService implements MutantServiceInt {
             if (i == 0) {
                 basicValidation(hashAcum, "2", dna, hashAcum.get("2"), 5);
             }
-            if (j > 0){
+            if (j > 0) {
                 obliqueValidation(hashAcum, dna, i, j + i, i + j - 1, false);
             }
-            if (j <= i){
+            if (j <= i) {
                 obliqueValidation(hashAcum, dna, i + 1, j, i + j - 1, true);
             }
             if (repeatedSequences == 2 || validateAllSize(hashAcum, dna.length)) {
@@ -72,13 +72,13 @@ public class MutantService implements MutantServiceInt {
     private void obliqueValidation(Map<String, Integer> hashAcum, String[] dna, int i, int j, int max, boolean left) {
         if (repeatedSequences < 2 && validateSize(max, dna.length)) {
             String key = calculateKey(i, j);
-            hashAcum.computeIfAbsent(key, k-> 0);
-            if (left){
+            hashAcum.computeIfAbsent(key, k -> 0);
+            if (left) {
                 int jCalculate = (Integer.valueOf(key.substring(0, String.valueOf(i + 1).length())) + hashAcum.get(key));
                 if (validateSize(hashAcum.get(key), dna.length) && validateSize(jCalculate - 1, dna.length)) {
                     sumRepeatedSequence(hashAcum, key, validateRule(jCalculate, hashAcum.get(key), dna, 3));
                 }
-            } else{
+            } else {
                 int jCalculate = (Integer.valueOf(key.substring(String.valueOf(i).length())) + hashAcum.get(key));
                 if (validateSize(hashAcum.get(key), dna.length) && validateSize(jCalculate - 1, dna.length)) {
                     sumRepeatedSequence(hashAcum, key, validateRule(hashAcum.get(key), jCalculate, dna, 3));
@@ -118,10 +118,14 @@ public class MutantService implements MutantServiceInt {
     }
 
     private char equalsChar(int i, int j, char charAux, String[] dna) {
-        if (charAux == ' ') {
-            charAux = dna[i].charAt(j);
-        } else {
-            if (charAux != dna[i].charAt(j)) charAux = '\0';
+        try {
+            if (charAux == ' ') {
+                charAux = dna[i].charAt(j);
+            } else {
+                if (charAux != dna[i].charAt(j)) charAux = '\0';
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            charAux = '\0';
         }
         return charAux;
     }

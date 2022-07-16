@@ -8,11 +8,11 @@
 		<version>2.6.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.meli</groupId>
-	<artifactId>dnaanalyzer</artifactId>
+	<groupId>com.meli.dnaanalyzer</groupId>
+	<artifactId>DNAAnalyzer</artifactId>
 	<version>1.0.0</version>
-	<name>dnaanalyzer</name>
-	<description>dnaanalyzer</description>
+	<name>DNAAnalyzer</name>
+	<description>DNAAnalyzer</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
@@ -25,12 +25,9 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<scope>runtime</scope>
-			<optional>true</optional>
+			<artifactId>spring-boot-starter-aop</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -52,6 +49,16 @@
 					<artifactId>hamcrest-core</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-ui</artifactId>
+			<version>1.6.9</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-ui</artifactId>
+			<version>1.6.4</version>
 		</dependency>
     </dependencies>
 
