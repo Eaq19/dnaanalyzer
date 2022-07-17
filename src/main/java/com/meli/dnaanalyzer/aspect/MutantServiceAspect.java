@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class MutantServiceAspect {
 
-    @Around("execution(* com.meli.dnaanalyzer.service.impl.*.*(..))")
+    @Around("execution(* com.meli.dnaanalyzer.service.impl.MutantService.*(..))")
     public boolean countTime(ProceedingJoinPoint punt) throws Throwable {
         Long fist = System.currentTimeMillis();
         boolean response = (boolean) punt.proceed();

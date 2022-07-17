@@ -1,6 +1,12 @@
 package com.meli.dnaanalyzer.service.impl;
 
+import com.google.gson.Gson;
+import com.meli.dnaanalyzer.model.dao.PersonDAO;
+import com.meli.dnaanalyzer.model.dao.TypeDAO;
+import com.meli.dnaanalyzer.repository.PersonRepository;
 import com.meli.dnaanalyzer.service.MutantServiceInt;
+import com.meli.dnaanalyzer.util.Type;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -11,6 +17,11 @@ public class MutantService implements MutantServiceInt {
 
     private static final int SEQUENCE_SIZE = 4;
     private int repeatedSequences = 0;
+
+    @Autowired
+    private PersonRepository personRepository;
+    @Autowired
+    private Gson gson;
 
     @Override
     public boolean mutant(String[] dna) {
@@ -27,6 +38,15 @@ public class MutantService implements MutantServiceInt {
                 }
             }
         }
+        PersonDAO personDAO = PersonDAO.builder()
+                .dna(gson.toJson(dna))
+                .build();
+        if (repeatedSequences >= 2){
+            personDAO.setType(TypeDAO.builder().id(Type.MUTANT.getId()).build());
+        } else {
+            personDAO.setType(TypeDAO.builder().id(Type.HUMAN.getId()).build());
+        }
+        personRepository.save(personDAO);
         return repeatedSequences == 2;
     }
 
