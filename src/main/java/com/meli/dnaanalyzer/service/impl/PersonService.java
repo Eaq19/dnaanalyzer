@@ -16,8 +16,8 @@ public class PersonService implements PersonServiceInt {
     public StatisticsDTO stats() {
         StatisticsDTO statisticsDTO = StatisticsDTO.builder().countHumanDna(personRepository.getCountOfPersonByType(1)).countMutantDna(personRepository.getCountOfPersonByType(2)).build();
         if (statisticsDTO.getCountMutantDna() > 0 && statisticsDTO.getCountHumanDna() > 0) {
-            statisticsDTO.setRatio(Double.valueOf(statisticsDTO.getCountMutantDna() / statisticsDTO.getCountHumanDna()));
-        } else if ((statisticsDTO.getCountMutantDna() == 0 && statisticsDTO.getCountHumanDna() == 0) || statisticsDTO.getCountMutantDna() == 0) {
+            statisticsDTO.setRatio((double) statisticsDTO.getCountMutantDna() / (double) statisticsDTO.getCountHumanDna());
+        } else if (statisticsDTO.getCountMutantDna() == 0) {
             statisticsDTO.setRatio(0.0);
         } else if (statisticsDTO.getCountHumanDna() == 0) {
             statisticsDTO.setRatio(null);

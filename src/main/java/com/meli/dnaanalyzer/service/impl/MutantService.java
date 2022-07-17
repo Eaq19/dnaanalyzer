@@ -16,6 +16,7 @@ import java.util.Map;
 public class MutantService implements MutantServiceInt {
 
     private static final int SEQUENCE_SIZE = 4;
+    private static final int MINIMUM_VALID = 2;
     private int repeatedSequences = 0;
 
     @Autowired
@@ -31,7 +32,7 @@ public class MutantService implements MutantServiceInt {
             Map<String, Integer> hashAcum = new HashMap<>();
             hashAcum.put("2", 0);
             for (int i = 0; i < dna.length; i++) {
-                if (repeatedSequences < 2) {
+                if (repeatedSequences < MINIMUM_VALID) {
                     traverseArray(i, dna, hashAcum);
                 } else {
                     break;
@@ -41,13 +42,13 @@ public class MutantService implements MutantServiceInt {
         PersonDAO personDAO = PersonDAO.builder()
                 .dna(gson.toJson(dna))
                 .build();
-        if (repeatedSequences >= 2){
+        if (repeatedSequences >= MINIMUM_VALID){
             personDAO.setType(TypeDAO.builder().id(Type.MUTANT.getId()).build());
         } else {
             personDAO.setType(TypeDAO.builder().id(Type.HUMAN.getId()).build());
         }
         personRepository.save(personDAO);
-        return repeatedSequences == 2;
+        return repeatedSequences >= MINIMUM_VALID;
     }
 
     public void traverseArray(int i, String[] dna, Map<String, Integer> hashAcum) {
@@ -69,7 +70,7 @@ public class MutantService implements MutantServiceInt {
             if (j <= i) {
                 obliqueValidation(hashAcum, dna, i + 1, j, i + j - 1, true);
             }
-            if (repeatedSequences == 2 || validateAllSize(hashAcum, dna.length)) {
+            if (repeatedSequences == MINIMUM_VALID || validateAllSize(hashAcum, dna.length)) {
                 break;
             }
         }
@@ -84,13 +85,13 @@ public class MutantService implements MutantServiceInt {
     }
 
     private void basicValidation(Map<String, Integer> hashAcum, String key, String[] dna, int i, int rule) {
-        if (repeatedSequences < 2 && validateSize(hashAcum.get(key) - 1, dna.length)) {
-            sumRepeatedSequence(hashAcum, key, validateRule(i, hashAcum.get("0"), dna, rule));
+        if (repeatedSequences < MINIMUM_VALID && validateSize(hashAcum.get(key) - 1, dna.length)) {
+            sumRepeatedSequence(hashAcum, key, validateRule(i, hashAcum.get(key), dna, rule));
         }
     }
 
     private void obliqueValidation(Map<String, Integer> hashAcum, String[] dna, int i, int j, int max, boolean left) {
-        if (repeatedSequences < 2 && validateSize(max, dna.length)) {
+        if (repeatedSequences < MINIMUM_VALID && validateSize(max, dna.length)) {
             String key = calculateKey(i, j);
             hashAcum.computeIfAbsent(key, k -> 0);
             if (left) {
