@@ -45,7 +45,7 @@ public class GlobalExceptionHandler {
     /**
      * Customize the response for ContentNotAllowedException.
      */
-    protected ResponseEntity<APIError> handleContentNotAllowedException(ContentNotAllowedException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+    private ResponseEntity<APIError> handleContentNotAllowedException(ContentNotAllowedException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         List<String> errorMessages = ex.getErrors().stream().map(contentError -> contentError.getObjectName() + " " + contentError.getDefaultMessage()).collect(Collectors.toList());
 
         return handleExceptionInternal(ex, new APIError(errorMessages), headers, status, request);
@@ -54,7 +54,7 @@ public class GlobalExceptionHandler {
     /**
      * A single place to customize the response body of all Exception types.
      */
-    protected ResponseEntity<APIError> handleExceptionInternal(Exception ex, APIError body, HttpHeaders headers, HttpStatus status, WebRequest request) {
+    private ResponseEntity<APIError> handleExceptionInternal(Exception ex, APIError body, HttpHeaders headers, HttpStatus status, WebRequest request) {
         if (HttpStatus.INTERNAL_SERVER_ERROR.equals(status)) {
             request.setAttribute(WebUtils.ERROR_EXCEPTION_ATTRIBUTE, ex, RequestAttributes.SCOPE_REQUEST);
         }

@@ -1,28 +1,23 @@
 package com.meli.dnaanalyzer.service.impl;
 
-import com.google.gson.Gson;
-import com.meli.dnaanalyzer.model.dao.PersonDAO;
-import com.meli.dnaanalyzer.model.dao.TypeDAO;
-import com.meli.dnaanalyzer.repository.PersonRepository;
 import com.meli.dnaanalyzer.service.MutantServiceInt;
-import com.meli.dnaanalyzer.util.Type;
+import com.meli.dnaanalyzer.service.PersonServiceInt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.meli.dnaanalyzer.util.Constant.MINIMUM_VALID;
+import static com.meli.dnaanalyzer.util.Constant.SEQUENCE_SIZE;
+
 @Service
 public class MutantService implements MutantServiceInt {
 
-    private static final int SEQUENCE_SIZE = 4;
-    private static final int MINIMUM_VALID = 2;
     private int repeatedSequences = 0;
 
     @Autowired
-    private PersonRepository personRepository;
-    @Autowired
-    private Gson gson;
+    private PersonServiceInt personServiceInt;
 
     @Override
     public boolean mutant(String[] dna) {
@@ -39,19 +34,11 @@ public class MutantService implements MutantServiceInt {
                 }
             }
         }
-        PersonDAO personDAO = PersonDAO.builder()
-                .dna(gson.toJson(dna))
-                .build();
-        if (repeatedSequences >= MINIMUM_VALID){
-            personDAO.setType(TypeDAO.builder().id(Type.MUTANT.getId()).build());
-        } else {
-            personDAO.setType(TypeDAO.builder().id(Type.HUMAN.getId()).build());
-        }
-        personRepository.save(personDAO);
+        personServiceInt.save(dna, repeatedSequences);
         return repeatedSequences >= MINIMUM_VALID;
     }
 
-    public void traverseArray(int i, String[] dna, Map<String, Integer> hashAcum) {
+    private void traverseArray(int i, String[] dna, Map<String, Integer> hashAcum) {
         hashAcum.put("0", 0);
         hashAcum.put("1", 0);
         for (int j = 0; j < dna.length; j++) {
@@ -70,7 +57,7 @@ public class MutantService implements MutantServiceInt {
             if (j <= i) {
                 obliqueValidation(hashAcum, dna, i + 1, j, i + j - 1, true);
             }
-            if (repeatedSequences == MINIMUM_VALID || validateAllSize(hashAcum, dna.length)) {
+            if (repeatedSequences >= MINIMUM_VALID || validateAllSize(hashAcum, dna.length)) {
                 break;
             }
         }
