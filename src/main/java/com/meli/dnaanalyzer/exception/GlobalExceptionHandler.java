@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.util.WebUtils;
@@ -14,7 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@ControllerAdvice
+@RestControllerAdvice
 public class GlobalExceptionHandler {
 
     /**
@@ -47,7 +49,6 @@ public class GlobalExceptionHandler {
      */
     private ResponseEntity<APIError> handleContentNotAllowedException(ContentNotAllowedException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         List<String> errorMessages = ex.getErrors().stream().map(contentError -> contentError.getObjectName() + " " + contentError.getDefaultMessage()).collect(Collectors.toList());
-
         return handleExceptionInternal(ex, new APIError(errorMessages), headers, status, request);
     }
 

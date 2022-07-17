@@ -20,6 +20,14 @@ public class PersonService implements PersonServiceInt {
     @Autowired
     private Gson gson;
 
+
+    /**
+     * Método que se encarga de obtener las estadísticas de personas analizadas por el Api.
+     * <p>
+     * Method that is responsible for obtaining the statistics of people analyzed by the API.
+     *
+     * @return StatisticsDTO Object that represents the statistics
+     */
     @Override
     public StatisticsDTO stats() {
         StatisticsDTO statisticsDTO = StatisticsDTO.builder().countHumanDna(personRepository.getCountOfPersonByType(1)).countMutantDna(personRepository.getCountOfPersonByType(2)).build();
@@ -33,6 +41,18 @@ public class PersonService implements PersonServiceInt {
         return statisticsDTO;
     }
 
+    /**
+     * Método que se encarga de persistir la información de una persona asignándole el tipo al que pertenece
+     * (Humano o mutante).
+     * <p>
+     * Method that is responsible for persisting the information of a person by assigning the type to which it belongs
+     * (Human or mutant).
+     *
+     * @param dna    Array of Strings that represents the DNA of a person, it must be a matrix [NxN], in which N must be
+     *               the number of letters that each position of the array will contain.
+     * @param repeat Number of repeated sequences found
+     * @return PersonDAO that represents the with id
+     */
     @Override
     public PersonDAO save(String[] dna, int repeat) {
         PersonDAO personDAO = PersonDAO.builder().dna(gson.toJson(dna)).build();
@@ -43,5 +63,4 @@ public class PersonService implements PersonServiceInt {
         }
         return personRepository.save(personDAO);
     }
-
 }
