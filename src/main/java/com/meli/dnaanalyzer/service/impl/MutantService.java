@@ -22,16 +22,13 @@ public class MutantService implements MutantServiceInt {
     @Override
     public boolean mutant(String[] dna) {
         repeatedSequences = 0;
-        int rowLength = dna.length;
-        if (rowLength >= SEQUENCE_SIZE) {
-            Map<String, Integer> hashAcum = new HashMap<>();
-            hashAcum.put("2", 0);
-            for (int i = 0; i < dna.length; i++) {
-                if (repeatedSequences < MINIMUM_VALID) {
-                    traverseArray(i, dna, hashAcum);
-                } else {
-                    break;
-                }
+        Map<String, Integer> hashAcum = new HashMap<>();
+        hashAcum.put("2", 0);
+        for (int i = 0; i < dna.length; i++) {
+            if (repeatedSequences < MINIMUM_VALID) {
+                traverseArray(i, dna, hashAcum);
+            } else {
+                break;
             }
         }
         personServiceInt.save(dna, repeatedSequences);
