@@ -16,7 +16,7 @@ class DNAAnalyzerApplicationDevTests {
 
 	@Test
 	void contextLoads() {
-		assertThat(activeProfile).isBlank();
+		assertThat(activeProfile).isNotNull();
 	}
 
 }
