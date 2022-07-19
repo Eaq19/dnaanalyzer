@@ -267,6 +267,23 @@ gcloud app browse
 
 _Para le caso de esta aplicación la URL correspondiente desplegada es https://dnaanalyzer.rj.r.appspot.com_
 
+_Se deben tener en cuenta las configuraciones datas en el archivo app.yaml el cual establece las configuraciones basicas
+de instancias y rendimiento de la aplicaciones para soportar cargas, adicional a esto es importante ajustar temas de 
+manejo de trafico._
+
+```
+runtime: java11
+instance_class: F2
+automatic_scaling:
+  target_cpu_utilization: 0.65
+  min_idle_instances: 1
+  min_instances: 5
+  max_instances: 50
+  min_pending_latency: 30ms
+  max_pending_latency: automatic
+  max_concurrent_requests: 50
+```
+
 ## Construido con 🛠️
 
 _Las herramientas utilizadas para construir el proyecto son:_
