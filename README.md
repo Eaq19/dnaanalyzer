@@ -1,11 +1,8 @@
 DNA ANALIYZER
 
-http://localhost:8080/swagger-ui/index.html
-
-http://localhost:8080/v3/api-docs/
 # DNA ANALIYZER
 
-_Acá va un párrafo que describa lo que es el proyecto_
+_Aplicativo java con método que se encarga de validar a partir de una secuencia de adn si una persona se puede catalogar como Humano o Mutante, si en la lista de secuencias se encuentran dos o mas coincidencias de cuatro letras seguidas de forma horizontal, vertical u oblicua se considera mutante de lo contrario se considera humano, y con esta validación se persiste en base de datos._
 
 ## Comenzando 🚀
 

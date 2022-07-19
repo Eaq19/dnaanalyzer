@@ -96,7 +96,7 @@ class MutantControllerImplTest {
         APIError apiError = gson.fromJson(mvcResult.getResponse().getContentAsString(), APIError.class);
         assertThat(apiError).isNotNull();
         assertThat(apiError.getErrors()).isNotNull();
-        assertThat(apiError.getErrors().get(0)).isEqualTo("GCDCTA is not appropriate");
+        assertThat(apiError.getErrors().get(0)).isEqualTo("Data is not appropriate");
         apiError.setErrors(null);
         assertThat(apiError.getErrors()).isNull();
     }
