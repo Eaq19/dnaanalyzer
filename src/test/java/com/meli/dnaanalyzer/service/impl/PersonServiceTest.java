@@ -74,11 +74,11 @@ class PersonServiceTest {
     })
     void stats(long returnHuman, long returnMutant, Double response) {
         //Given
-        //When
         when(personRepository.getCountOfPersonByType(Type.HUMAN.getId())).thenReturn(returnHuman);
         when(personRepository.getCountOfPersonByType(Type.MUTANT.getId())).thenReturn(returnMutant);
-        //Then
+        //When
         StatisticsDTO statisticsDTO = personService.stats();
+        //Then
         assertThat(statisticsDTO).isNotNull();
         assertThat(statisticsDTO.getCountHumanDna()).isEqualTo(returnHuman);
         assertThat(statisticsDTO.getCountMutantDna()).isEqualTo(returnMutant);

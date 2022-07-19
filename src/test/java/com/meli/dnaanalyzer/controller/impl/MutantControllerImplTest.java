@@ -36,6 +36,7 @@ class MutantControllerImplTest {
 
     @Test
     void mutant() throws Exception {
+        //Given
         Person person = new Person();
         person.setDna(new String[]{
                 "ATGCGA",
@@ -44,11 +45,13 @@ class MutantControllerImplTest {
                 "AGAAGG",
                 "CCCCTA",
                 "TCACTG"});
+        //When
         mockMvc.perform(
                         MockMvcRequestBuilders.post("/v1/mutant/")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
                                 .content(gson.toJson(person)))
+                //Then
                 .andExpect(status().isOk());
     }
 

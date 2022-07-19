@@ -13,6 +13,14 @@ public class MutantServiceAspect {
 
     private Logger logger = LoggerFactory.getLogger(MutantServiceAspect.class);
 
+    /**
+     * Función que permite evaluar el tiempo que dura procesando la función mutant con el digo basico de funcionamiento,
+     * sin afectación de tiempos por logueo o validaciones.
+     *
+     * @param punt
+     * @return
+     * @throws Throwable
+     */
     @Around("execution(* com.meli.dnaanalyzer.service.impl.MutantService.*(..))")
     public boolean countTime(ProceedingJoinPoint punt) throws Throwable {
         Long fist = System.currentTimeMillis();
