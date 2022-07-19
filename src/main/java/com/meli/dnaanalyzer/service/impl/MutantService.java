@@ -14,7 +14,7 @@ import static com.meli.dnaanalyzer.util.Constant.SEQUENCE_SIZE;
 @Service
 public class MutantService implements MutantServiceInt {
 
-    private int repeatedSequences = 0;
+    private int repeatedSequences;
 
     @Autowired
     private PersonServiceInt personServiceInt;
